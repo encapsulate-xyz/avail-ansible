@@ -1,0 +1,6 @@
+node_ufw_rules:
+  - port: "{{ avail[type].ports.p2p_port }}"
+    proto: tcp
+    rule: allow
+    from: any
+    comment: avail_p2p_port
