@@ -1,0 +1,28 @@
+---
+- name: Include user creation task for avail
+  ansible.builtin.include_tasks: tasks/create_user_and_directories.yml
+  vars:
+    home: "{{ node_home_dir }}"
+    directories: "{{ node_directories }}"
+    log_file_path: "{{ node_log_file_path }}"
+
+- name: Include build binary task
+  ansible.builtin.include_tasks: download_binary.yml
+
+- name: Fetch node key from vault
+  ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
+  vars:
+    vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_key_file_nam }}"
+    secret_destination_path: "{{ node_key_file_path }}"
+    secret_type: base64
+
+- name: Copy avail-node systemd service file
+  ansible.builtin.template:
+    src: "{{ type }}/systemd.service.j2"
+    dest: /etc/systemd/system/{{ service_identifier }}.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload service
+    - Restart service

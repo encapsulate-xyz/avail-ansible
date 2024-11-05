@@ -1,0 +1,34 @@
+---
+- name: Set system variables
+  set_fact:
+    arch: "{{ ansible_architecture }}"
+    distro: "{{ ansible_distribution | lower }}"
+    distro_version: "{{ ansible_distribution_version | replace('.', '') }}"
+
+- name: Set archive filename
+  set_fact:
+    archive_file_name: "{{ arch }}-{{ distro }}-{{ distro_version }}-{{ node_default_binary_name }}.tar.gz"
+
+- name: Download and unarchive the binary
+  ansible.builtin.unarchive:
+    src: "{{ avail[type].source_url }}/{{ avail[type].version }}/{{ archive_file_name }}"
+    dest: "{{ tmp_dir }}"
+    remote_src: true
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Copy the binary file
+  ansible.builtin.copy:
+    src: "{{ tmp_dir }}/{{ node_default_binary_name }}"
+    dest: "{{ node_bin_dir }}/{{ service_identifier }}"
+    remote_src: true
+    owner: root
+    group: root
+    force: true
+    mode: "0755"
+
+- name: Clean up the temporary files in /tmp
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}/{{ archive_file_name }}"
+    state: absent
