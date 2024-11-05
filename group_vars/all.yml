@@ -7,20 +7,18 @@ default_node_types:
   - validator
   - default
 
-sui:
+tmp_dir: /tmp
+
+avail:
   validator:
-    source_url: https://releases.sui.io
+    source_url: https://github.com/availproject/avail/releases/download
     ports:
-      server_listen_port: 9191
-      metrics_port: 9186
+      rpc_port: 9944
+      p2p_port: 30333
+      prometheus_port: 9615
   fullnode:
-    version: 88888888888
-    source_url: https://releases.sui.io
+    source_url: https://github.com/availproject/avail/releases/download
     ports:
-      server_listen_port: 9191
-      metrics_port: 9186
-  bridge:
-    source_url: https://releases.sui.io
-    ports:
-      server_listen_port: 9191
-      metrics_port: 9186
+      rpc_port: 9944
+      p2p_port: 30333
+      prometheus_port: 9615
