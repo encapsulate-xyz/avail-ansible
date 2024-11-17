@@ -1,18 +1,25 @@
 ---
 - name: Set system variables
   ansible.builtin.set_fact:
-    arch: "{{ ansible_architecture }}"
     distro: "{{ ansible_distribution | lower }}"
     distro_version: "{{ ansible_distribution_version | replace('.', '') }}"
 
 - name: Set archive filename
   ansible.builtin.set_fact:
-    archive_file_name: "{{ arch }}-{{ distro }}-{{ distro_version }}-{{ node_default_binary_name }}.tar.gz"
+    archive_file_name: "{{ ansible_architecture }}-{{ distro }}-{{ distro_version }}-{{ node_default_binary_name }}.tar.gz"
+
+- name: Create a tmp service identifier directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}/{{ service_identifier }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
 
 - name: Download and unarchive the binary
   ansible.builtin.unarchive:
     src: "{{ avail[type].source_url }}/{{ avail[type].version }}/{{ archive_file_name }}"
-    dest: "{{ tmp_dir }}"
+    dest: "{{ tmp_dir }}/{{ service_identifier }}"
     remote_src: true
     owner: root
     group: root
@@ -20,7 +27,7 @@
 
 - name: Copy the binary file
   ansible.builtin.copy:
-    src: "{{ tmp_dir }}/{{ node_default_binary_name }}"
+    src: "{{ tmp_dir }}/{{ service_identifier }}/{{ node_default_binary_name }}"
     dest: "{{ node_bin_dir }}/{{ service_identifier }}"
     remote_src: true
     owner: root
@@ -30,5 +37,5 @@
 
 - name: Clean up the temporary files in /tmp
   ansible.builtin.file:
-    path: "{{ tmp_dir }}/{{ archive_file_name }}"
+    path: "{{ tmp_dir }}/{{ service_identifier }}"
     state: absent

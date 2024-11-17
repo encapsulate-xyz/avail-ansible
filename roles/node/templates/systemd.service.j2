@@ -6,13 +6,15 @@ User={{ service_identifier }}
 Group={{ service_identifier }}
 WorkingDirectory={{ node_home_dir }}
 ExecStart={{ node_bin_dir }}/{{ service_identifier }} --chain {{ env }} \
-    --name {{ org }} \
-    --base-path {{ node_data_dir }} \
-    --node-key-file {{ node_key_file_path }} \
-    --keystore-path {{ node_keystore_dir }} \
-    --port {{ avail[type].ports.p2p_port }} \
-    --rpc-port {{ avail[type].ports.rpc_port }} \
-    --prometheus-port {{ avail[type].ports.prometheus_port }}
+{% if type == "validator" %}--validator {% endif %}\
+--name {{ org }} \
+--base-path {{ node_data_dir }} \
+--node-key-file {{ node_key_file_path }} \
+--keystore-path {{ node_keystore_dir }} \
+--port {{ avail[type].ports.p2p_port }} \
+{% if type == "fullnode" %}--rpc-external {% endif %}\
+--rpc-port {{ avail[type].ports.rpc_port }} \
+--prometheus-port {{ avail[type].ports.prometheus_port }}
 Restart=always
 RestartSec=4
 LimitNOFILE=65536
