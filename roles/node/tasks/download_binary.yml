@@ -34,6 +34,8 @@
     group: root
     force: true
     mode: "0755"
+  notify:
+    - Restart service
 
 - name: Clean up the temporary files in /tmp
   ansible.builtin.file:
