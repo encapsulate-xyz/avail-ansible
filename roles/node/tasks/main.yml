@@ -19,7 +19,9 @@
 
 - name: Fetch node key from vault
   ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
-  when: type == 'validator'
+  when:
+    - type == 'validator'
+    - fetch_validator_keys | default(false) | bool
   vars:
     vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_key_file_name }}"
     secret_destination_path: "{{ node_key_file_path }}"
