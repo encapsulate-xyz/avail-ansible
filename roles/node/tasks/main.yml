@@ -17,16 +17,6 @@
 - name: Include build binary task
   ansible.builtin.include_tasks: download_binary.yml
 
-- name: Fetch node key from vault
-  ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
-  when:
-    - type == 'validator'
-    - fetch_validator_keys | default(false) | bool
-  vars:
-    vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_key_file_name }}"
-    secret_destination_path: "{{ node_key_file_path }}"
-    secret_type: base64
-
 - name: Copy avail-node systemd service file
   ansible.builtin.template:
     src: "{{ env }}/systemd.service.j2"
