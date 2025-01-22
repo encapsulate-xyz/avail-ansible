@@ -9,7 +9,6 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} --chain turing \
 {% if type == "validator" %}--validator {% endif %}\
 --name {{ org }} \
 --base-path {{ node_data_dir }} \
-{% if fetch_validator_keys | default(false) | bool %}--node-key-file {{ node_key_file_path }} {% endif %}\
 --keystore-path {{ node_keystore_dir }} \
 --port {{ avail[type].ports.p2p_port }} \
 {% if type == "fullnode" %}--rpc-external {% endif %}\
