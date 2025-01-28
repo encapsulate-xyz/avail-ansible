@@ -14,7 +14,7 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} --chain mainnet \
 {% if type == "fullnode" %}--rpc-external {% endif %}\
 --rpc-port {{ avail[type].ports.rpc_port }} \
 --prometheus-external \
---prometheus-port {{ avail[type].ports.prometheus_port }}
+--prometheus-port {{ avail[type].ports.prometheus_port }} --detailed-log-output
 Restart=always
 RestartSec=4
 LimitNOFILE=65536
