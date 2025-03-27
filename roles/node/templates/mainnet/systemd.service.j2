@@ -18,7 +18,7 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} --chain mainnet \
 Restart=always
 RestartSec=4
 LimitNOFILE=65536
-MemoryLimit=64G
+MemoryMax=64G
 StandardOutput=append:{{ node_log_file_path }}
 StandardError=inherit
 
