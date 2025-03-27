@@ -3,5 +3,8 @@
 avail:
   validator:
     version: v2.2.5.1
+    grandpa_authority_id: 0x641eedeb227a27cb7649d88aa2095afb653787aa55ce2b7ede1f3e216d60fff7
+    node:
+      version: v18.20.5
   fullnode:
     version: v2.2.5.1

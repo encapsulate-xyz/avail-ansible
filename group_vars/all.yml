@@ -16,6 +16,9 @@ default_node_types:
 
 tmp_dir: /tmp
 
+nvm:
+  path: /opt/nvm
+
 avail:
   validator:
     source_url: https://github.com/availproject/avail/releases/download

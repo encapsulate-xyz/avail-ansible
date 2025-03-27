@@ -1,0 +1,17 @@
+[Unit]
+Description=Check Avail Authority Status
+
+[Service]
+Type=oneshot
+User={{ service_identifier }}
+Group={{ service_identifier }}
+WorkingDirectory={{ node_home_dir }}
+EnvironmentFile={{ node_environment_general_file_path }}
+ExecStart=/bin/bash -c 'source {{ nvm.path }}/nvm.sh && node {{ node_metrics_script_file_path }}'
+LimitNOFILE=65536
+MemoryMax=64G
+StandardOutput=append:{{ node_metrics_log_file_path }}
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
