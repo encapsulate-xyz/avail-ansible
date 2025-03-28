@@ -18,3 +18,9 @@
   ansible.builtin.systemd:
     name: "{{ service_identifier }}"
     state: stopped
+
+- name: Start timer
+  ansible.builtin.systemd:
+    name: "{{ service_identifier }}.timer"
+    enabled: true
+    state: started

@@ -29,6 +29,8 @@
     owner: root
     group: root
     mode: "0644"
+  notify:
+    - Reload service
 
 - name: Copy avail metrics timer service file
   ansible.builtin.template:
@@ -37,13 +39,6 @@
     owner: root
     group: root
     mode: "0644"
-
-- name: Reload service
-  ansible.builtin.systemd:
-    daemon_reload: true
-
-- name: Enable and start timer service
-  ansible.builtin.systemd:
-    name: "{{ service_identifier }}.timer"
-    enabled: true
-    state: restarted
+  notify:
+    - Reload service
+    - Start timer
