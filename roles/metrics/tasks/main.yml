@@ -41,4 +41,4 @@
     mode: "0644"
   notify:
     - Reload service
-    - Start timer
+    - Restart timer
