@@ -4,26 +4,16 @@ node_home_dir: /opt/{{ service_identifier }}
 
 node_bin_dir: "{{ node_home_dir }}/bin"
 node_data_dir: "{{ node_home_dir }}/data"
-node_env_dir: "{{ node_home_dir }}/environment"
 node_key_dir: "{{ node_home_dir }}/keys"
 node_keystore_dir: "{{ node_key_dir }}/keystore"
-node_metrics_dir: "{{ node_home_dir }}/metrics"
 node_log_dir: "{{ node_home_dir }}/log"
 
 node_directories:
   - "{{ node_home_dir }}"
   - "{{ node_bin_dir }}"
-  - "{{ node_env_dir }}"
   - "{{ node_key_dir }}"
   - "{{ node_keystore_dir }}"
   - "{{ node_data_dir }}"
-  - "{{ node_metrics_dir }}"
   - "{{ node_log_dir }}"
 
 node_log_file_path: "{{ node_log_dir }}/{{ service_identifier }}.log"
-
-node_metrics_log_file_path: "{{ node_log_dir }}/{{ service_identifier }}-metrics.log"
-
-node_metrics_script_file_path: "{{ node_metrics_dir }}/{{ node_metrics_script_file_name }}"
-
-node_environment_general_file_path: "{{ node_env_dir }}/{{ node_environment_general_file_name }}"

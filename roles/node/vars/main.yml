@@ -3,8 +3,3 @@
 
 # binary names
 node_default_binary_name: avail-node
-
-node_metrics_script_file_name: authority-metrics.js
-
-# Environment file names
-node_environment_general_file_name: "{{ service_identifier }}.env"

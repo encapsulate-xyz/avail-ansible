@@ -27,6 +27,3 @@
   notify:
     - Reload service
     - Restart service
-
-- name: Include authority_metrics task
-  ansible.builtin.include_tasks: authority_metrics.yml
