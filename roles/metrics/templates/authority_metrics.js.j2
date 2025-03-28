@@ -5,11 +5,45 @@ const axios = require('axios');
 const TARGET_AUTHORITY = '{{ avail.validator.grandpa_authority_id }}';
 const PUSHGATEWAY_URL = 'http://{{ monitor_server_dns }}:{{ pushgateway_port }}';
 const JOB_NAME = 'chain_exporter';
+const RPC_TIMEOUT_MS = 30000;
+const PUSH_TIMEOUT_MS = 30000;
+
+function log(msg) {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${msg}`);
+}
+
+async function connectToApiWithTimeout(endpoint, timeoutMs) {
+  const provider = new WsProvider(endpoint);
+
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject(new Error(`Connection to RPC endpoint timed out after ${timeoutMs / 1000} seconds.`));
+    }, timeoutMs);
+
+    provider.on('connected', async () => {
+      try {
+        const api = await ApiPromise.create({ provider });
+        clearTimeout(timeout);
+        resolve(api);
+      } catch (err) {
+        clearTimeout(timeout);
+        reject(new Error('Failed to create API instance after connecting.'));
+      }
+    });
+
+    provider.on('error', (err) => {
+      clearTimeout(timeout);
+      reject(new Error(`WebSocket connection error: ${err.message}`));
+    });
+  });
+}
 
 async function main() {
   try {
-    const provider = new WsProvider('ws://127.0.0.1:{{ avail.validator.ports.rpc_port }}');
-    const api = await ApiPromise.create({ provider });
+    log('Attempting to connect to Substrate RPC...');
+    const api = await connectToApiWithTimeout('ws://127.0.0.1:{{ avail.validator.ports.rpc_port }}', RPC_TIMEOUT_MS);
+    log('Connected to Substrate RPC.');
 
     const grandpa = await api.query.grandpa.authorities();
 
@@ -26,7 +60,6 @@ async function main() {
 
     const result = isTargetFound ? 1 : 0;
 
-    // Setup Prometheus Gauge metric
     const registry = new client.Registry();
     const matchMetric = new client.Gauge({
       name: 'substrate_node_authority_role',
@@ -34,28 +67,28 @@ async function main() {
       labelNames: ['authority', 'env', 'project', 'type'],
     });
 
-    // Example label values
     const labels = {
       authority: TARGET_AUTHORITY,
-      env: '{{ env }}',
       type: 'validator',
-      project: '{{ project }}',
     };
 
     matchMetric.set(labels, result);
     registry.registerMetric(matchMetric);
 
-    // Push to Pushgateway
+    log('Pushing metrics to Pushgateway...');
     await axios.post(
-      `${PUSHGATEWAY_URL}/metrics/job/${JOB_NAME}`,
+      `${PUSHGATEWAY_URL}/metrics/job/${JOB_NAME}/project/{{ project }}/env/{{ env }}`,
       await registry.metrics(),
-      { headers: { 'Content-Type': 'text/plain' } }
+      {
+        headers: { 'Content-Type': 'text/plain' },
+        timeout: PUSH_TIMEOUT_MS,
+      }
     );
 
-    console.log('✅ Metrics successfully pushed to Pushgateway.');
+    log('Metrics successfully pushed to Pushgateway.');
     await api.disconnect();
   } catch (err) {
-    console.error('❌ Error connecting to Substrate node or pushing metric:', err);
+    log(`Error: ${err.message || err}`);
     process.exit(1);
   }
 }
