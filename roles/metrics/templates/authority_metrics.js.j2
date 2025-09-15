@@ -3,7 +3,7 @@ const client = require('prom-client');
 const axios = require('axios');
 
 const TARGET_AUTHORITY = '{{ avail.validator.grandpa_authority_id }}';
-const PUSHGATEWAY_URL = 'http://{{ monitor_server_dns }}:{{ pushgateway_port }}';
+const PUSHGATEWAY_URL = 'https://{{ pushgateway_dns }}';
 const JOB_NAME = 'chain_exporter';
 const RPC_TIMEOUT_MS = 30000;
 const PUSH_TIMEOUT_MS = 30000;
@@ -80,7 +80,10 @@ async function main() {
       `${PUSHGATEWAY_URL}/metrics/job/${JOB_NAME}/project/{{ project }}/env/{{ env }}`,
       await registry.metrics(),
       {
-        headers: { 'Content-Type': 'text/plain' },
+        headers: {
+          'Content-Type': 'text/plain',
+          'Authorization': 'Basic {{ vault.default.pushgateway.auth_header }}'
+        },
         timeout: PUSH_TIMEOUT_MS,
       }
     );

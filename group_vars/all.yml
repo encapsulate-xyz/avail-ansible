@@ -4,8 +4,8 @@
 org: encapsulate
 domain_regex: ^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$
 monitor_server_dns: monitor.encapsulate.xyz
+pushgateway_dns: pushgateway.encapsulate.xyz
 ansible_port: 8192
-pushgateway_port: 9091
 
 architecture_map:
   x86_64: amd64
