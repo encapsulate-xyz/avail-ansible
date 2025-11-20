@@ -6,5 +6,10 @@ avail:
     grandpa_authority_id: "0x9454703654730ee4b61c9c546810bc786c915227b6bdec3c4de132bf76e1e728"
     node:
       version: v18.20.5
-  fullnode:
-    version: v2.3.4.0
+
+vara:
+  validator:
+    version: v1.9.1
+    grandpa_authority_id: "0x009851931eec6a7a803dfe3a636e8cdb74d442b9f386c83331ac126b8878b7b9"
+    node:
+      version: v18.20.5
