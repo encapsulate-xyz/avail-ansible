@@ -5,16 +5,20 @@ Description={{ service_identifier }}
 User={{ service_identifier }}
 Group={{ service_identifier }}
 WorkingDirectory={{ node_home_dir }}
-ExecStart={{ node_bin_dir }}/{{ service_identifier }} --chain turing \
-{% if type == "validator" %}--validator {% endif %}\
+ExecStart={{ node_bin_dir }}/{{ service_identifier }} --chain mainnet \
+--validator \
 --name {{ org }} \
 --base-path {{ node_data_dir }} \
 --keystore-path {{ node_keystore_dir }} \
 --port {{ avail[type].ports.p2p_port }} \
-{% if type == "fullnode" %}--rpc-external {% endif %}\
+{% if fetch_validator_keys | default(false) %}
+--node-key-file {{ node_key_file_path }} \
+{% endif %}
 --rpc-port {{ avail[type].ports.rpc_port }} \
 --prometheus-external \
---prometheus-port {{ avail[type].ports.prometheus_port }} --detailed-log-output
+--prometheus-port {{ avail[type].ports.prometheus_port }} \
+--detailed-log-output
+
 Restart=always
 RestartSec=4
 LimitNOFILE=65536

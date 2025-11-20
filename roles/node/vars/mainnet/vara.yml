@@ -1,0 +1,12 @@
+node_ufw_rules:
+  - port: "{{ vara[type].ports.p2p_port }}"
+    proto: tcp
+    rule: allow
+    from: any
+    comment: p2p_port
+
+  - port: "{{ vara[type].ports.prometheus_port }}"
+    proto: tcp
+    rule: allow
+    from: "{{ monitor_server_dns }}"
+    comment: prometheus_port

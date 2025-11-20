@@ -17,3 +17,5 @@ node_directories:
   - "{{ node_log_dir }}"
 
 node_log_file_path: "{{ node_log_dir }}/{{ service_identifier }}.log"
+
+node_key_file_path: "{{ node_key_dir }}/{{ node_key_file_name }}"
