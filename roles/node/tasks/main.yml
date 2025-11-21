@@ -15,7 +15,7 @@
     log_file_path: "{{ node_log_file_path }}"
 
 - name: Include install binary task
-  ansible.builtin.include_tasks: install_binary/{{ project }}.yml
+  ansible.builtin.include_tasks: install_binary/main.yml
 
 - name: Fetch node key from vault
   ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml

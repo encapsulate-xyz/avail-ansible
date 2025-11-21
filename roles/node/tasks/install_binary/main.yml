@@ -1,0 +1,3 @@
+---
+- name: Include project-specific install binary task
+  ansible.builtin.include_tasks: "{{ project }}.yml"
