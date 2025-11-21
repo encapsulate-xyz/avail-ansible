@@ -4,9 +4,13 @@ all:
   vars:
     env: mainnet
   children:
+
     avail:
       hosts:
         validator.avail.mainnet.encapsulate.xyz:
           type: validator
-        fullnode.avail.mainnet.encapsulate.xyz:
-          type: fullnode
+
+    vara:
+      hosts:
+        validator.vara.mainnet.encapsulate.xyz:
+          type: validator

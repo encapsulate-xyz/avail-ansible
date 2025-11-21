@@ -1,10 +1,10 @@
 ---
-- name: Set up avail node
+- name: Set up Substrate node
   hosts: all
   become: true
   gather_facts: true
   vars:
-    allowed_node_types: [fullnode, validator]
+    allowed_node_types: [validator]
   vars_files:
     - group_vars/all.yml
     - group_vars/vault.yml

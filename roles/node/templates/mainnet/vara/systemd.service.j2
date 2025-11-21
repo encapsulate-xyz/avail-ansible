@@ -1,0 +1,34 @@
+[Unit]
+Description={{ service_identifier }}
+
+[Service]
+User={{ service_identifier }}
+Group={{ service_identifier }}
+WorkingDirectory={{ node_home_dir }}
+
+ExecStart={{ node_bin_dir }}/{{ service_identifier }} --chain vara \
+--validator \
+--name {{ org }} \
+--base-path {{ node_data_dir }} \
+--rpc-cors all \
+--keystore-path {{ node_keystore_dir }} \
+--port {{ vara[type].ports.p2p_port }} \
+{% if fetch_validator_keys | default(false) %}
+--node-key-file {{ node_key_file_path }} \
+{% endif %}
+--rpc-port {{ vara[type].ports.rpc_port }} \
+--public-addr /ip4/{{ ansible_default_ipv4.address }}/tcp/{{ vara[type].ports.p2p_port }} \
+--telemetry-url "wss://telemetry.rs/submit 1" \
+--prometheus-external \
+--prometheus-port {{ vara[type].ports.prometheus_port }} \
+--detailed-log-output
+
+Restart=always
+RestartSec=4
+LimitNOFILE=65536
+MemoryMax=64G
+StandardOutput=append:{{ node_log_file_path }}
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target

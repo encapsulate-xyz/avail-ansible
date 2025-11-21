@@ -2,4 +2,9 @@
 # maintains file name, binary names, and anything which is not a directory or path
 
 # binary names
-node_default_binary_name: avail-node
+node_default_binary_name:
+  avail: avail-node
+  vara: gear
+
+# key file name
+node_key_file_name: secret_ed25519

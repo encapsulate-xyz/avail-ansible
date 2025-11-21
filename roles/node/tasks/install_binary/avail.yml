@@ -6,7 +6,7 @@
 
 - name: Set archive filename
   ansible.builtin.set_fact:
-    archive_file_name: "{{ ansible_architecture }}-{{ distro }}-{{ distro_version }}-{{ node_default_binary_name }}.tar.gz"
+    archive_file_name: "{{ ansible_architecture }}-{{ distro }}-{{ distro_version }}-{{ node_default_binary_name[project] }}.tar.gz"
 
 - name: Create a tmp service identifier directory
   ansible.builtin.file:
@@ -27,7 +27,7 @@
 
 - name: Copy the binary file
   ansible.builtin.copy:
-    src: "{{ tmp_dir }}/{{ service_identifier }}/{{ node_default_binary_name }}"
+    src: "{{ tmp_dir }}/{{ service_identifier }}/{{ node_default_binary_name[project] }}"
     dest: "{{ node_bin_dir }}/{{ service_identifier }}"
     remote_src: true
     owner: root

@@ -4,9 +4,8 @@ all:
   vars:
     env: testnet
   children:
+
     avail:
       hosts:
         validator.avail.testnet.encapsulate.xyz:
           type: validator
-        fullnode.avail.testnet.encapsulate.xyz:
-          type: fullnode
