@@ -9,7 +9,7 @@ avail:
 
 vara:
   validator:
-    version: v1.9.1
+    version: v1.10.0
     grandpa_authority_id: "0x009851931eec6a7a803dfe3a636e8cdb74d442b9f386c83331ac126b8878b7b9"
     node:
       version: v18.20.5
