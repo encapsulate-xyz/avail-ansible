@@ -9,6 +9,8 @@ all:
       hosts:
         validator.avail.mainnet.encapsulate.xyz:
           type: validator
+        new.validator.avail.mainnet.encapsulate.xyz:
+          type: validator
 
     vara:
       hosts:
