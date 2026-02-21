@@ -7,9 +7,7 @@ all:
 
     avail:
       hosts:
-        validator.avail.mainnet.encapsulate.xyz:
-          type: validator
-        new.validator.avail.mainnet.encapsulate.xyz:
+        ts.validator.avail.mainnet.encapsulate.xyz:
           type: validator
 
     vara:
