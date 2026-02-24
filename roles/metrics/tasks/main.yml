@@ -22,6 +22,17 @@
     group: "{{ service_identifier }}"
     mode: "0644"
 
+- name: Install npm packages
+  community.general.npm:
+    name: "{{ item }}"
+    global: yes
+  loop:
+    - "@polkadot/api"
+    - "prom-client"
+    - "axios"
+  environment:
+    PATH: "{{ nvm.path }}/versions/node/{{ avail.validator.node.version }}/bin:{{ ansible_env.PATH }}"
+
 - name: Copy avail metrics systemd service file
   ansible.builtin.template:
     src: authority_metrics.service.j2
