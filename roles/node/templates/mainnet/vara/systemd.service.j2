@@ -15,6 +15,8 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} --chain vara \
 --port {{ vara[type].ports.p2p_port }} \
 {% if fetch_validator_keys | default(false) %}
 --node-key-file {{ node_key_file_path }} \
+{% else %}
+--unsafe-force-node-key-generation \
 {% endif %}
 --rpc-port {{ vara[type].ports.rpc_port }} \
 --public-addr /ip4/{{ ansible_default_ipv4.address }}/tcp/{{ vara[type].ports.p2p_port }} \
