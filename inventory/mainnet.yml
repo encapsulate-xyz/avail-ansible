@@ -12,5 +12,5 @@ all:
 
     vara:
       hosts:
-        validator.vara.mainnet.encapsulate.xyz:
+        ts.validator.vara.mainnet.encapsulate.xyz:
           type: validator
