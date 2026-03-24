@@ -9,6 +9,14 @@
     path: "{{ db_dir }}"
     state: absent
 
+- name: Create data directory
+  ansible.builtin.file:
+    path: "{{ db_dir }}"
+    state: directory
+    owner: "{{ service_identifier }}"
+    group: "{{ service_identifier }}"
+    mode: "0755"
+
 - name: Download and Extract lz4 format snapshot
   ansible.builtin.shell: |
     set -o pipefail
