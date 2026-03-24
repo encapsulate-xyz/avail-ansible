@@ -1,6 +1,7 @@
 ---
 # maintains versions and can overwrite all.yml
 avail:
+  snapshot_url: https://snapshots.publicnode.com/avail-2710711.tar.lz4
   validator:
     version: v2.3.4.1
     grandpa_authority_id: "0xf8ed0036a12280086a4fa0a122287c94f134410c11d3c27745c6bf6d402625a3"
@@ -8,6 +9,7 @@ avail:
       version: v18.20.5
 
 vara:
+  snapshot_url: https://snapshots.vara.network/vara-mainnet-31499599.tar.lz4
   validator:
     version: v1.10.0
     grandpa_authority_id: "0x8c7bdd6ab6aa036dc58732333f3534d371463d7cae9e6b5e717564ed4324efe0"

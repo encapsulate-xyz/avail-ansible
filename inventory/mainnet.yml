@@ -9,8 +9,10 @@ all:
       hosts:
         ts.validator.avail.mainnet.encapsulate.xyz:
           type: validator
+          db_dir: "/opt/avail/data/chains/avail_da_mainnet/db"
 
     vara:
       hosts:
         ts.validator.vara.mainnet.encapsulate.xyz:
           type: validator
+          db_dir: "/opt/vara/data/chains/vara_network/db"
