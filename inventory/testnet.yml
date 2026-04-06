@@ -7,6 +7,6 @@ all:
 
     avail:
       hosts:
-        validator.avail.testnet.encapsulate.xyz:
+        ts.validator.avail.testnet.encapsulate.xyz:
           type: validator
           db_dir: "/opt/avail/data/chains/avail_turing_network/db"
